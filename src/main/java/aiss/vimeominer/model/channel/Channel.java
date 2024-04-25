@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Channel {
 
     @JsonProperty("uri")
-    private String uri;
+    private String id;
     @JsonProperty("name")
     private String name;
     @JsonProperty("description")
@@ -20,12 +20,12 @@ public class Channel {
 
     @JsonProperty("uri")
     public String getUri() {
-        return uri;
+        return id;
     }
 
     @JsonProperty("uri")
     public void setUri(String uri) {
-        this.uri = uri;
+        this.id = uri.replace("/channels/", "");
     }
 
     @JsonProperty("name")
@@ -62,9 +62,9 @@ public class Channel {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(Channel.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
-        sb.append("uri");
+        sb.append("id");
         sb.append('=');
-        sb.append(((this.uri == null)?"<null>":this.uri));
+        sb.append(((this.id == null)?"<null>":this.id));
         sb.append(',');
         sb.append("name");
         sb.append('=');

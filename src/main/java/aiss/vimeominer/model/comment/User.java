@@ -3,18 +3,16 @@ package aiss.vimeominer.model.comment;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Comment {
+public class User {
 
     @JsonProperty("uri")
     private String uri;
-    @JsonProperty("text")
-    private String text;
-    @JsonProperty("created_on")
-    private String createdOn;
+    @JsonProperty("name")
+    private String name;
     @JsonProperty("link")
     private String link;
-    @JsonProperty("user")
-    private User user;
+    @JsonProperty("picture")
+    private Picture picture;
 
     @JsonProperty("uri")
     public String getUri() {
@@ -26,24 +24,14 @@ public class Comment {
         this.uri = uri;
     }
 
-    @JsonProperty("text")
-    public String getText() {
-        return text;
+    @JsonProperty("name")
+    public String getName() {
+        return name;
     }
 
-    @JsonProperty("text")
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    @JsonProperty("created_on")
-    public String getCreatedOn() {
-        return createdOn;
-    }
-
-    @JsonProperty("created_on")
-    public void setCreatedOn(String createdOn) {
-        this.createdOn = createdOn;
+    @JsonProperty("name")
+    public void setName(String name) {
+        this.name = name;
     }
 
     @JsonProperty("link")
@@ -56,39 +44,35 @@ public class Comment {
         this.link = link;
     }
 
-    @JsonProperty("user")
-    public User getUser() {
-        return user;
+    @JsonProperty("picture")
+    public Picture getPictures() {
+        return picture;
     }
 
-    @JsonProperty("user")
-    public void setUser(User user) {
-        this.user = user;
+    @JsonProperty("picture")
+    public void setPictures(Picture picture) {
+        this.picture = picture;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(Comment.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(User.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("uri");
         sb.append('=');
         sb.append(((this.uri == null)?"<null>":this.uri));
         sb.append(',');
-        sb.append("text");
+        sb.append("name");
         sb.append('=');
-        sb.append(((this.text == null)?"<null>":this.text));
-        sb.append(',');
-        sb.append("createdOn");
-        sb.append('=');
-        sb.append(((this.createdOn == null)?"<null>":this.createdOn));
+        sb.append(((this.name == null)?"<null>":this.name));
         sb.append(',');
         sb.append("link");
         sb.append('=');
         sb.append(((this.link == null)?"<null>":this.link));
         sb.append(',');
-        sb.append("user");
+        sb.append("picture");
         sb.append('=');
-        sb.append(((this.user == null)?"<null>":this.user));
+        sb.append(((this.picture == null)?"<null>":this.picture));
         sb.append(',');
         if (sb.charAt((sb.length()- 1)) == ',') {
             sb.setCharAt((sb.length()- 1), ']');
