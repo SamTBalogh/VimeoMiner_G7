@@ -44,12 +44,12 @@ public class User {
         this.link = link;
     }
 
-    @JsonProperty("picture")
+    @JsonProperty("pictures")
     public Picture getPictures() {
         return picture;
     }
 
-    @JsonProperty("picture")
+    @JsonProperty("pictures")
     public void setPictures(Picture picture) {
         this.picture = picture;
     }
