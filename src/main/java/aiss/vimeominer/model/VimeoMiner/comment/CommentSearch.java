@@ -1,5 +1,5 @@
 
-package aiss.vimeominer.model.comment;
+package aiss.vimeominer.model.VimeoMiner.comment;
 
 import java.util.List;
 

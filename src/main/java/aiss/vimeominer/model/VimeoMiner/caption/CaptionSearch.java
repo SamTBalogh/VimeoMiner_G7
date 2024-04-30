@@ -1,5 +1,5 @@
 
-package aiss.vimeominer.model.caption;
+package aiss.vimeominer.model.VimeoMiner.caption;
 
 import java.util.List;
 

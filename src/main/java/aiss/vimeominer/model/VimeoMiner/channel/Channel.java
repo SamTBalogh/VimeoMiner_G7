@@ -1,5 +1,5 @@
 
-package aiss.vimeominer.model.channel;
+package aiss.vimeominer.model.VimeoMiner.channel;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

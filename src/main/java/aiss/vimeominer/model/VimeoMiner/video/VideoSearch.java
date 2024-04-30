@@ -1,5 +1,5 @@
 
-package aiss.vimeominer.model.video;
+package aiss.vimeominer.model.VimeoMiner.video;
 
 import java.util.List;
 
