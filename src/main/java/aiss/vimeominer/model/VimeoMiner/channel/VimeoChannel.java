@@ -1,30 +1,32 @@
-
 package aiss.vimeominer.model.VimeoMiner.channel;
 
 
+import aiss.vimeominer.model.VimeoMiner.video.VimeoVideo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Channel {
+public class VimeoChannel {
 
     @JsonProperty("uri")
     private String id;
     @JsonProperty("name")
     private String name;
     @JsonProperty("description")
-    private Object description;
+    private String description;
     @JsonProperty("created_time")
     private String createdTime;
+    private List<VimeoVideo> videoList;
     
 
     @JsonProperty("uri")
-    public String getUri() {
+    public String getId() {
         return id;
     }
 
     @JsonProperty("uri")
-    public void setUri(String uri) {
+    public void setId(String uri) {
         this.id = uri.replace("/channels/", "");
     }
 
@@ -39,12 +41,12 @@ public class Channel {
     }
 
     @JsonProperty("description")
-    public Object getDescription() {
+    public String getDescription() {
         return description;
     }
 
     @JsonProperty("description")
-    public void setDescription(Object description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -58,10 +60,19 @@ public class Channel {
         this.createdTime = createdTime;
     }
 
+    public List<VimeoVideo> getVimeoVideos() {
+        return videoList;
+    }
+
+    public void setVimeoVideos(List<VimeoVideo> vimeoVideos) {
+        this.videoList = vimeoVideos;
+    }
+
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(Channel.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(VimeoChannel.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("id");
         sb.append('=');
         sb.append(((this.id == null)?"<null>":this.id));

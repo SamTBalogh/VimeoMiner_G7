@@ -3,7 +3,7 @@ package aiss.vimeominer.model.VimeoMiner.comment;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class User {
+public class VimeoUser {
 
     @JsonProperty("uri")
     private String uri;
@@ -57,7 +57,7 @@ public class User {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(User.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(VimeoUser.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("uri");
         sb.append('=');
         sb.append(((this.uri == null)?"<null>":this.uri));

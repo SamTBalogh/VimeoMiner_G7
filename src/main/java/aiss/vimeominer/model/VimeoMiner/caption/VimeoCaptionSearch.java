@@ -1,31 +1,30 @@
 
-package aiss.vimeominer.model.VimeoMiner.video;
+package aiss.vimeominer.model.VimeoMiner.caption;
 
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class VideoSearch {
+public class VimeoCaptionSearch {
 
     @JsonProperty("data")
-    private List<Video> data;
+    private List<VimeoCaption> data;
 
     @JsonProperty("data")
-    public List<Video> getData() {
+    public List<VimeoCaption> getData() {
         return data;
     }
 
     @JsonProperty("data")
-    public void setData(List<Video> data) {
+    public void setData(List<VimeoCaption> data) {
         this.data = data;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(VideoSearch.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(VimeoCaptionSearch.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("data");
         sb.append('=');
         sb.append(((this.data == null)?"<null>":this.data));

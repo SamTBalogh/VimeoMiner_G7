@@ -4,7 +4,7 @@ package aiss.vimeominer.model.VimeoMiner.comment;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Comment {
+public class VimeoComment {
 
     @JsonProperty("uri")
     private String uri;
@@ -15,7 +15,7 @@ public class Comment {
     @JsonProperty("link")
     private String link;
     @JsonProperty("user")
-    private User user;
+    private VimeoUser user;
 
     @JsonProperty("uri")
     public String getUri() {
@@ -58,19 +58,19 @@ public class Comment {
     }
 
     @JsonProperty("user")
-    public User getUser() {
+    public VimeoUser getUser() {
         return user;
     }
 
     @JsonProperty("user")
-    public void setUser(User user) {
+    public void setUser(VimeoUser user) {
         this.user = user;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(Comment.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(VimeoComment.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("uri");
         sb.append('=');
         sb.append(((this.uri == null)?"<null>":this.uri));

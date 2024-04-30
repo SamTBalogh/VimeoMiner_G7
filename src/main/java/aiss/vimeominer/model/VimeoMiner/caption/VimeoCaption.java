@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Caption {
+public class VimeoCaption {
 
     @JsonProperty("language")
     private String language;
@@ -47,7 +47,7 @@ public class Caption {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(Caption.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(VimeoCaption.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("language");
         sb.append('=');
         sb.append(((this.language == null)?"<null>":this.language));
