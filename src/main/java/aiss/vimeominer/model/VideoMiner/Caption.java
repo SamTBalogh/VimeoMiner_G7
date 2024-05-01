@@ -1,5 +1,6 @@
 package aiss.vimeominer.model.VideoMiner;
 
+import aiss.vimeominer.model.VimeoMiner.caption.VimeoCaption;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -17,13 +18,11 @@ public class Caption {
     @JsonProperty("language")
     private String language;
 
-    public Caption(String id, String language, String name) {
-        this.id = id;
-        this.language = language;
-        this.name = name;
+    public Caption(VimeoCaption vimeoCaption) {
+        this.id=vimeoCaption.getId();
+        this.name=vimeoCaption.getName();
+        this.language=vimeoCaption.getLanguage();
     }
-
-    public Caption() {}
 
     public String getId() {
         return id;

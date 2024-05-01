@@ -1,10 +1,8 @@
 package aiss.vimeominer.model.VimeoMiner.channel;
 
 
-import aiss.vimeominer.model.VimeoMiner.video.VimeoVideo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class VimeoChannel {
@@ -17,7 +15,6 @@ public class VimeoChannel {
     private String description;
     @JsonProperty("created_time")
     private String createdTime;
-    private List<VimeoVideo> videoList;
     
 
     @JsonProperty("uri")
@@ -60,13 +57,13 @@ public class VimeoChannel {
         this.createdTime = createdTime;
     }
 
-    public List<VimeoVideo> getVimeoVideos() {
+    /*public List<VimeoVideo> getVimeoVideos() {
         return videoList;
     }
 
     public void setVimeoVideos(List<VimeoVideo> vimeoVideos) {
         this.videoList = vimeoVideos;
-    }
+    }*/
 
 
     @Override

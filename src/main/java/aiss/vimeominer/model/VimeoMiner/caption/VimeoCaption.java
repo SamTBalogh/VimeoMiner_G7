@@ -10,7 +10,7 @@ public class VimeoCaption {
     @JsonProperty("language")
     private String language;
     @JsonProperty("id")
-    private Integer id;
+    private String id;
     @JsonProperty("name")
     private String name;
 
@@ -25,12 +25,12 @@ public class VimeoCaption {
     }
 
     @JsonProperty("id")
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
     @JsonProperty("id")
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

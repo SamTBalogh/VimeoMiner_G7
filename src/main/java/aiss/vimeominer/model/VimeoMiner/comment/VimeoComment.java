@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class VimeoComment {
 
     @JsonProperty("uri")
-    private String uri;
+    private String id;
     @JsonProperty("text")
     private String text;
     @JsonProperty("created_on")
@@ -18,13 +18,13 @@ public class VimeoComment {
     private VimeoUser user;
 
     @JsonProperty("uri")
-    public String getUri() {
-        return uri;
+    public String getId() {
+        return id;
     }
 
     @JsonProperty("uri")
-    public void setUri(String uri) {
-        this.uri = uri;
+    public void setId(String uri) {
+        this.id = parseUriId(uri);
     }
 
     @JsonProperty("text")
@@ -73,7 +73,7 @@ public class VimeoComment {
         sb.append(VimeoComment.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("uri");
         sb.append('=');
-        sb.append(((this.uri == null)?"<null>":this.uri));
+        sb.append(((this.id == null)?"<null>":this.id));
         sb.append(',');
         sb.append("text");
         sb.append('=');
@@ -97,6 +97,12 @@ public class VimeoComment {
             sb.append(']');
         }
         return sb.toString();
+    }
+
+    private String parseUriId(String uri){
+
+        int startIndex = uri.indexOf("/comments/") + "/comments/".length();
+        return uri.substring(startIndex);
     }
 
 }

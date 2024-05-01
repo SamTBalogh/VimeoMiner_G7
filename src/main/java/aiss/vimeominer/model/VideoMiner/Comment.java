@@ -1,5 +1,6 @@
 package aiss.vimeominer.model.VideoMiner;
 
+import aiss.vimeominer.model.VimeoMiner.comment.VimeoComment;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -20,13 +21,11 @@ public class Comment {
     @JsonProperty("author")
     private User author;
 
-    public Comment() {}
-
-    public Comment(String id, String text ,String createdOn, User author) {
-        this.id = id;
-        this.text = text;
-        this.createdOn = createdOn;
-        this.author = author;
+    public Comment(VimeoComment vimeoComment) {
+        this.id = vimeoComment.getId();
+        this.text = vimeoComment.getText();
+        this.createdOn = vimeoComment.getCreatedOn();
+        this.author = new User(vimeoComment.getUser());
     }
 
     public String getId() {

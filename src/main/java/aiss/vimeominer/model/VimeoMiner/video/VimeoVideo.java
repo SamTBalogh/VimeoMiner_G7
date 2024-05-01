@@ -1,9 +1,6 @@
-
 package aiss.vimeominer.model.VimeoMiner.video;
 
 
-import aiss.vimeominer.model.VimeoMiner.caption.VimeoCaption;
-import aiss.vimeominer.model.VimeoMiner.comment.VimeoComment;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -17,13 +14,9 @@ public class VimeoVideo {
     @JsonProperty("name")
     private String name;
     @JsonProperty("description")
-    private Object description;
+    private String description;
     @JsonProperty("release_time")
     private String releaseTime;
-    @JsonProperty("release_time")
-    private List<VimeoCaption> captionList;
-    @JsonProperty("release_time")
-    private List<VimeoComment> commentsList;
 
     @JsonProperty("uri")
     public String getId() {
@@ -46,12 +39,12 @@ public class VimeoVideo {
     }
 
     @JsonProperty("description")
-    public Object getDescription() {
+    public String getDescription() {
         return description;
     }
 
     @JsonProperty("description")
-    public void setDescription(Object description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -63,23 +56,6 @@ public class VimeoVideo {
     @JsonProperty("release_time")
     public void setReleaseTime(String releaseTime) {
         this.releaseTime = releaseTime;
-    }
-
-    @JsonProperty("comments")
-    public List<VimeoComment> getCommentsList() {
-        return commentsList;
-    }
-
-    public void setCommentsList(List<VimeoComment> commentsList) {
-        this.commentsList = commentsList;
-    }
-
-    public List<VimeoCaption> getCaptionList() {
-        return captionList;
-    }
-
-    public void setCaptionList(List<VimeoCaption> captionList) {
-        this.captionList = captionList;
     }
 
     @Override

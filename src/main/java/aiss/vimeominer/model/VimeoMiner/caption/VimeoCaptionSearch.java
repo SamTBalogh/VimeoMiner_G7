@@ -12,12 +12,12 @@ public class VimeoCaptionSearch {
     private List<VimeoCaption> data;
 
     @JsonProperty("data")
-    public List<VimeoCaption> getData() {
+    public List<VimeoCaption> getCaptions() {
         return data;
     }
 
     @JsonProperty("data")
-    public void setData(List<VimeoCaption> data) {
+    public void setCaptions(List<VimeoCaption> data) {
         this.data = data;
     }
 

@@ -1,5 +1,6 @@
 package aiss.vimeominer.model.VideoMiner;
 
+import aiss.vimeominer.model.VimeoMiner.comment.VimeoUser;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -14,8 +15,6 @@ public class User {
     * created by a User that already has a Comment in a previously stored Video. To avoid this exception, we automatically
     * assign an id to each new User with AutoIncrement.
      */
-    @JsonProperty("id")
-    private Long id;
 
     @JsonProperty("name")
     private String name;
@@ -26,20 +25,10 @@ public class User {
     @JsonProperty("picture_link")
     private String picture_link;
 
-    public User() {}
-
-    public User(String name, String userLink, String pictureLink) {
-        this.name = name;
-        this.user_link = userLink;
-        this.picture_link = pictureLink;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public User(VimeoUser user) {
+        this.name = user.getName();
+        this.user_link = user.getLink();
+        this.picture_link = user.getPictures().getBaseLink();
     }
 
     public String getName() {
@@ -69,8 +58,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", user_link='" + user_link + '\'' +
                 ", picture_link='" + picture_link + '\'' +
                 '}';

@@ -10,16 +10,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class VimeoVideoSearch {
 
     @JsonProperty("data")
-    private List<VimeoVideo> data;
+    private List<VimeoVideo> videos;
 
     @JsonProperty("data")
-    public List<VimeoVideo> getData() {
-        return data;
-    }
+    public List<VimeoVideo> getVideos() {return videos;}
 
     @JsonProperty("data")
-    public void setData(List<VimeoVideo> data) {
-        this.data = data;
+    public void setVideos(List<VimeoVideo> videos) {
+        this.videos = videos;
     }
 
     @Override
@@ -28,7 +26,7 @@ public class VimeoVideoSearch {
         sb.append(VimeoVideoSearch.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("data");
         sb.append('=');
-        sb.append(((this.data == null)?"<null>":this.data));
+        sb.append(((this.videos == null)?"<null>":this.videos));
         sb.append(',');
         if (sb.charAt((sb.length()- 1)) == ',') {
             sb.setCharAt((sb.length()- 1), ']');

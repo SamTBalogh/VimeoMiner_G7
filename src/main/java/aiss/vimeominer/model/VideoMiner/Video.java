@@ -1,5 +1,6 @@
 package aiss.vimeominer.model.VideoMiner;
 
+import aiss.vimeominer.model.VimeoMiner.video.VimeoVideo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
@@ -29,13 +30,11 @@ public class Video {
     @JsonProperty("captions")
     private List<Caption> captions;
 
-    public Video() {}
-
-    public Video(String id, String name, String description, String releaseTime) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.releaseTime = releaseTime;
+    public Video(VimeoVideo vimeoVideo) {
+        this.id = vimeoVideo.getId();
+        this.name = vimeoVideo.getName();
+        this.description = vimeoVideo.getDescription();
+        this.releaseTime = vimeoVideo.getReleaseTime();
         this.comments = new ArrayList<>();
         this.captions = new ArrayList<>();
     }

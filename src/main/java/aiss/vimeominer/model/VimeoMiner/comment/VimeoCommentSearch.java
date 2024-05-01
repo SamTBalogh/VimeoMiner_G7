@@ -12,12 +12,12 @@ public class VimeoCommentSearch {
     private List<VimeoComment> data;
 
     @JsonProperty("data")
-    public List<VimeoComment> getData() {
+    public List<VimeoComment> getComments() {
         return data;
     }
 
     @JsonProperty("data")
-    public void setData(List<VimeoComment> data) {
+    public void setComments(List<VimeoComment> data) {
         this.data = data;
     }
 

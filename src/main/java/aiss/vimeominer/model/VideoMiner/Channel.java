@@ -11,7 +11,6 @@ import java.util.List;
 
 public class Channel {
 
-
     @JsonProperty("id")
     private String id;
 
@@ -26,10 +25,6 @@ public class Channel {
 
     @JsonProperty("videos")
     private List<Video> videos;
-
-    public Channel() {
-        this.videos = new ArrayList<>();
-    }
 
     public Channel(String id, String name, String description, String createdTime) {
         this.id = id;
