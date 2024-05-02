@@ -1,6 +1,8 @@
 package aiss.vimeominer.service;
 
+import aiss.vimeominer.exception.VideosNotFoundException;
 import aiss.vimeominer.model.VideoMiner.Video;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,16 +17,27 @@ class VideoServiceTest {
     VideoService service;
 
     @Test
-    void findVideosByChannelId() {
+    @DisplayName("Get Videos")
+    void findVideosByChannelId() throws VideosNotFoundException {
         List<Video> videos = service.findVideosByChannelId("28359");
         assertNotNull(videos);
         System.out.println(videos);
     }
+
     @Test
-    void findVideosByChannelIdMaxVideos() {
+    @DisplayName("Get Videos Max Number")
+    void findVideosByChannelIdMaxVideos() throws VideosNotFoundException {
         List<Video> videos = service.findVideosByChannelIdMaxVideos("28359", 10);
         assertNotNull(videos);
         System.out.println("The number of videos in the list is "+videos.size());
+        System.out.println(videos);
+    }
+
+    @Test
+    @DisplayName("Get Videos Error 404")
+    void findVideosByChannelIdNotFound() throws VideosNotFoundException {
+        List<Video> videos = service.findVideosByChannelId("sdawsad");
+        assertNotNull(videos);
         System.out.println(videos);
     }
 }

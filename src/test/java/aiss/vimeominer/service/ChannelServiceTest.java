@@ -1,5 +1,6 @@
 package aiss.vimeominer.service;
 
+import aiss.vimeominer.exception.ChannelNotFoundException;
 import aiss.vimeominer.model.VideoMiner.Channel;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,8 +17,16 @@ class ChannelServiceTest {
 
     @Test
     @DisplayName("Get channel")
-    public void findChannelById() {
+    public void findChannelById() throws ChannelNotFoundException {
         Channel channel = service.findChannelById("28359");
+        assertNotNull(channel);
+        System.out.println(channel);
+    }
+
+    @Test
+    @DisplayName("Get channel Error 404")
+    public void findChannelByIdNotFound() throws ChannelNotFoundException {
+        Channel channel = service.findChannelById("Wololo");
         assertNotNull(channel);
         System.out.println(channel);
     }
