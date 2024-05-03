@@ -41,7 +41,7 @@ public class ChannelController {
     @Autowired
     CommentService commentService;
 
-    // POST http://localhost:8081/vimeominer
+    // POST http://localhost:8081/vimeominer/{id}
     @PostMapping("/{id}")
     public Channel PostChannelVideo(@PathVariable("id") String id,
         @RequestParam(name = "maxVideos", defaultValue = "10") Integer maxVideos,
@@ -65,6 +65,26 @@ public class ChannelController {
 
         HttpEntity<Channel> requestEntity = new HttpEntity<>(channel, headers);
         restTemplate.exchange(videoMinerUrl+"/channels", HttpMethod.POST, requestEntity, Void.class);
+
+        return channel;
+
+    }
+
+    @GetMapping("/{id}")
+    public Channel GetChannelVideo(@PathVariable("id") String id,
+                                    @RequestParam(name = "maxVideos", defaultValue = "10") Integer maxVideos,
+                                    @RequestParam(name = "maxComments", defaultValue = "10") Integer maxComments) throws ChannelNotFoundException, CaptionsNotFoundException, CommentsNotFoundException, VideosNotFoundException {
+
+        Channel channel = channelService.findChannelById(id);
+
+        List<Video> videos = videoService.findVideosByChannelIdMaxVideos(id, maxVideos);
+
+        for(Video video : videos){
+            video.setCaptions(captionService.findCaptionsByVideoId(video.getId()));
+            video.setComments(commentService.findCommentsByVideoIdMaxComments(video.getId(), maxComments));
+        }
+
+        channel.setVideos(videos);
 
         return channel;
 
