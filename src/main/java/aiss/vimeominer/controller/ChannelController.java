@@ -45,77 +45,88 @@ public class ChannelController {
 
     // POST http://localhost:8081/vimeoMiner/v1/{id}
     @Operation( summary = "Send a Channel ",
-            description = "Post a Channel object to VideoMiner from the Vimeo's API by specifying the channel Id, the Channel data is sent in the body of the request in JSON format",
+            description = "Post a Channel object to VideoMiner from the Vimeo's API by specifying the channel Id, the Channel data is sent in the body of the request in JSON format.<br /><br />" +
+                    "The maximum number of videos and comments to retrieve from the channel can be specified with the parameters `maxVideos` and `maxComments` respectively.<br />" +
+                    "If no values are provided, defaults of 10 videos and 10 comments will be retrieved from each channel.<br /><br />" +
+                    "Optionally, include an Authorization header with your token for authorization, taking in account that is required for VideoMiner to authorize the request.",
             tags = {"channels", "post"})
     @ApiResponses({
             @ApiResponse(responseCode = "201", content = {@Content(schema=@Schema(implementation = Channel.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "403", content = {@Content(schema=@Schema())}),
-            @ApiResponse(responseCode = "404", content = {@Content(schema=@Schema())})
+            @ApiResponse(responseCode = "404", content = {@Content(schema=@Schema())}),
+            @ApiResponse(responseCode = "429", content = {@Content(schema=@Schema())})
     })
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/{id}")
     public Channel PostChannelVideo(@PathVariable("id") String id,
         @RequestParam(name = "maxVideos", defaultValue = "10") Integer maxVideos,
         @RequestParam(name = "maxComments", defaultValue = "10") Integer maxComments,
-        @RequestHeader(name = "Authorization", required = false) String token) throws ChannelNotFoundException, CaptionsNotFoundException, CommentsNotFoundException, VideosNotFoundException, ForbiddenException {
+        @RequestHeader(name = "Authorization", required = false) String token) throws ChannelNotFoundException, CaptionsNotFoundException, CommentsNotFoundException, VideosNotFoundException, ForbiddenException, ResponseException {
 
-        RestTemplate restTemplate = new RestTemplate();
-
-        Channel channel = channelService.findChannelById(id);
-        System.out.println(token);
-        List<Video> videos = videoService.findVideosByChannelIdMaxVideos(id, maxVideos);
-
-        for(Video video : videos){
-            video.setCaptions(captionService.findCaptionsByVideoId(video.getId()));
-            video.setComments(commentService.findCommentsByVideoIdMaxComments(video.getId(), maxComments));
-        }
-
-        channel.setVideos(videos);
-
-        HttpHeaders headers = new HttpHeaders();
-        if(token!=null){
-            headers.add("Authorization", token);
-        }
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<Channel> requestEntity = new HttpEntity<>(channel, headers);
         try {
-            restTemplate.exchange(videoMinerUrl + "/channels", HttpMethod.POST, requestEntity, Void.class);
-        }
-        catch (HttpClientErrorException e){
-            throw new ForbiddenException(ForbiddenException.parse(e.getMessage()));
-        }
 
-        return channel;
+            RestTemplate restTemplate = new RestTemplate();
 
+            Channel channel = channelService.findChannelById(id);
+            List<Video> videos = videoService.findVideosByChannelIdMaxVideos(id, maxVideos);
+
+            for (Video video : videos) {
+                video.setCaptions(captionService.findCaptionsByVideoId(video.getId()));
+                video.setComments(commentService.findCommentsByVideoIdMaxComments(video.getId(), maxComments));
+            }
+
+            channel.setVideos(videos);
+
+            HttpHeaders headers = new HttpHeaders();
+            if (token != null) {
+                headers.add("Authorization", token);
+            }
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            HttpEntity<Channel> requestEntity = new HttpEntity<>(channel, headers);
+            try {
+                restTemplate.exchange(videoMinerUrl + "/channels", HttpMethod.POST, requestEntity, Void.class);
+            } catch (HttpClientErrorException e) {
+                throw new ForbiddenException(ForbiddenException.parseVideo(e.getMessage()));
+            }
+            return channel;
+        } catch (HttpClientErrorException e){
+            throw new ResponseException(ResponseException.parseVimeo(e.getMessage()));
+        }
     }
 
     // GET http://localhost:8081/vimeoMiner/v1/{id}
     @Operation( summary = "Retrieve a Channel by Id",
-            description = "Get a Channel object from the Vimeo's API by specifying its id",
+            description = "Get a Channel object from the Vimeo's API by specifying its Id.<br /><br />"+
+                    "The maximum number of videos and comments to retrieve from the channel can be specified with the parameters `maxVideos` and `maxComments` respectively.<br />" +
+                    "If no values are provided, defaults of 10 videos and 10 comments will be retrieved from the channel.",
             tags = {"channels", "get"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema=@Schema(implementation = Channel.class), mediaType = "application/json")}),
-            @ApiResponse(responseCode = "404", content = {@Content(schema=@Schema())})
+            @ApiResponse(responseCode = "404", content = {@Content(schema=@Schema())}),
+            @ApiResponse(responseCode = "429", content = {@Content(schema=@Schema())})
     })
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
     public Channel GetChannelVideo(@PathVariable("id") String id,
                                     @RequestParam(name = "maxVideos", defaultValue = "10") Integer maxVideos,
-                                    @RequestParam(name = "maxComments", defaultValue = "10") Integer maxComments) throws ChannelNotFoundException, CaptionsNotFoundException, CommentsNotFoundException, VideosNotFoundException {
+                                    @RequestParam(name = "maxComments", defaultValue = "10") Integer maxComments) throws ChannelNotFoundException, CaptionsNotFoundException, CommentsNotFoundException, VideosNotFoundException, ResponseException {
 
-        Channel channel = channelService.findChannelById(id);
+        try {
+            Channel channel = channelService.findChannelById(id);
 
-        List<Video> videos = videoService.findVideosByChannelIdMaxVideos(id, maxVideos);
+            List<Video> videos = videoService.findVideosByChannelIdMaxVideos(id, maxVideos);
 
-        for(Video video : videos){
-            video.setCaptions(captionService.findCaptionsByVideoId(video.getId()));
-            video.setComments(commentService.findCommentsByVideoIdMaxComments(video.getId(), maxComments));
+            for(Video video : videos){
+                video.setCaptions(captionService.findCaptionsByVideoId(video.getId()));
+                video.setComments(commentService.findCommentsByVideoIdMaxComments(video.getId(), maxComments));
+            }
+
+            channel.setVideos(videos);
+
+            return channel;
+        } catch (HttpClientErrorException e){
+            throw new ResponseException(ResponseException.parseVimeo(e.getMessage()));
         }
-
-        channel.setVideos(videos);
-
-        return channel;
-
     }
 }
