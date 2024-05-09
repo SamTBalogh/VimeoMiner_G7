@@ -16,7 +16,6 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/vimeominer")
@@ -42,12 +41,11 @@ public class ChannelController {
     public Channel PostChannelVideo(@PathVariable("id") String id,
         @RequestParam(name = "maxVideos", defaultValue = "10") Integer maxVideos,
         @RequestParam(name = "maxComments", defaultValue = "10") Integer maxComments,
-        @RequestHeader(name = "Authorization") Optional<String> token) throws ChannelNotFoundException, CaptionsNotFoundException, CommentsNotFoundException, VideosNotFoundException, ForbiddenException {
+        @RequestHeader(name = "Authorization", required = false) String token) throws ChannelNotFoundException, CaptionsNotFoundException, CommentsNotFoundException, VideosNotFoundException, ForbiddenException {
 
         RestTemplate restTemplate = new RestTemplate();
 
         Channel channel = channelService.findChannelById(id);
-        System.out.println(token);
         List<Video> videos = videoService.findVideosByChannelIdMaxVideos(id, maxVideos);
 
         for(Video video : videos){
@@ -58,8 +56,8 @@ public class ChannelController {
         channel.setVideos(videos);
 
         HttpHeaders headers = new HttpHeaders();
-        if(token.isPresent()){
-            headers.add("Authorization", String.valueOf(token));
+        if(token != null){
+            headers.add("Authorization", token);
         }
         headers.setContentType(MediaType.APPLICATION_JSON);
 
