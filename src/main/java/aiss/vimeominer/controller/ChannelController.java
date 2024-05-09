@@ -8,6 +8,12 @@ import aiss.vimeominer.service.CaptionService;
 import aiss.vimeominer.service.ChannelService;
 import aiss.vimeominer.service.CommentService;
 import aiss.vimeominer.service.VideoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -17,8 +23,9 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
+@Tag(name="Channel", description="Channel management API")
 @RestController
-@RequestMapping("/vimeominer")
+@RequestMapping("/vimeoMiner/v1")
 public class ChannelController {
 
     @Value("${videoMiner.url}")
@@ -36,7 +43,16 @@ public class ChannelController {
     @Autowired
     CommentService commentService;
 
-    // POST http://localhost:8081/vimeominer/{id}
+    // POST http://localhost:8081/vimeoMiner/v1/{id}
+    @Operation( summary = "Send a Channel ",
+            description = "Post a Channel object to VideoMiner from the Vimeo's API by specifying the channel Id, the Channel data is sent in the body of the request in JSON format",
+            tags = {"channels", "post"})
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", content = {@Content(schema=@Schema(implementation = Channel.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "403", content = {@Content(schema=@Schema())}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema=@Schema())})
+    })
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/{id}")
     public Channel PostChannelVideo(@PathVariable("id") String id,
         @RequestParam(name = "maxVideos", defaultValue = "10") Integer maxVideos,
@@ -46,6 +62,7 @@ public class ChannelController {
         RestTemplate restTemplate = new RestTemplate();
 
         Channel channel = channelService.findChannelById(id);
+        System.out.println(token);
         List<Video> videos = videoService.findVideosByChannelIdMaxVideos(id, maxVideos);
 
         for(Video video : videos){
@@ -56,7 +73,7 @@ public class ChannelController {
         channel.setVideos(videos);
 
         HttpHeaders headers = new HttpHeaders();
-        if(token != null){
+        if(token!=null){
             headers.add("Authorization", token);
         }
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -73,7 +90,15 @@ public class ChannelController {
 
     }
 
-    // GET http://localhost:8081/vimeominer/{id}
+    // GET http://localhost:8081/vimeoMiner/v1/{id}
+    @Operation( summary = "Retrieve a Channel by Id",
+            description = "Get a Channel object from the Vimeo's API by specifying its id",
+            tags = {"channels", "get"})
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema=@Schema(implementation = Channel.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = {@Content(schema=@Schema())})
+    })
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
     public Channel GetChannelVideo(@PathVariable("id") String id,
                                     @RequestParam(name = "maxVideos", defaultValue = "10") Integer maxVideos,
