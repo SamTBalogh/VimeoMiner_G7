@@ -24,10 +24,8 @@ class ChannelServiceTest {
     }
 
     @Test
-    @DisplayName("Get channel Error 404")
-    public void findChannelByIdNotFound() throws ChannelNotFoundException {
-        Channel channel = service.findChannelById("Wololo");
-        assertNotNull(channel);
-        System.out.println(channel);
+    @DisplayName("Get a Channel 404 Not Found")
+    void findChannelNotFound(){
+        assertThrows(ChannelNotFoundException.class, () -> {service.findChannelById("Wololo");});
     }
 }

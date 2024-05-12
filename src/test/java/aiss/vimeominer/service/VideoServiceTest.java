@@ -35,9 +35,13 @@ class VideoServiceTest {
 
     @Test
     @DisplayName("Get Videos Error 404")
-    void findVideosByChannelIdNotFound() throws VideosNotFoundException {
-        List<Video> videos = service.findVideosByChannelId("sdawsad");
-        assertNotNull(videos);
-        System.out.println(videos);
+    void findVideosByChannelIdNotFound() {
+        assertThrows(VideosNotFoundException.class, () -> {service.findVideosByChannelId("Wololo");});
+    }
+
+    @Test
+    @DisplayName("Get Videos Error 404")
+    void findVideosByChannelIdMaxVideosNotFound() {
+        assertThrows(VideosNotFoundException.class, () -> {service.findVideosByChannelIdMaxVideos("Wololo", 10);});
     }
 }

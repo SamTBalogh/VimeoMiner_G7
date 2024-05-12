@@ -62,7 +62,7 @@ public class ChannelController {
         RestTemplate restTemplate = new RestTemplate();
 
         Channel channel = channelService.findChannelById(id);
-        System.out.println(token);
+
         List<Video> videos = videoService.findVideosByChannelIdMaxVideos(id, maxVideos);
 
         for(Video video : videos){

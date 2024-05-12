@@ -25,10 +25,8 @@ class CaptionServiceTest {
     }
 
     @Test
-    @DisplayName("Get Captions Error 404")
-    void findCaptionsByVideoIdNotFound() throws CaptionsNotFoundException {
-        List<Caption> captions = service.findCaptionsByVideoId("Wololo");
-        assertNotNull(captions);
-        System.out.println(captions);
+    @DisplayName("Get captions from an invalid video Id")
+    void findCaptionsByVideoIdNotFound() {
+        assertThrows(CaptionsNotFoundException.class, () -> {service.findCaptionsByVideoId("Wololo");});
     }
 }
