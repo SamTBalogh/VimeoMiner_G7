@@ -1,2 +1,2 @@
-# ProyectoAISS
-Repositorio para el proyecto de integración de AISS
+# VimeoMiner
+Repository for the Vimeo adapter service for the AISS VideoMiner integration project
